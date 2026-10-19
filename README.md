@@ -6,7 +6,6 @@
 - 「我的」页保留创作中心板块
 - 评论区表情面板显示已购买的表情包
 - 界面文字跟随 App 语言（简体中文 / 繁體中文 / English / 日本語）
-- 屏蔽 B站 接口域名的 QUIC，让视频详情、评论、弹幕请求走 TCP，脚本才能处理（否则 App 可能改走 QUIC，绕过 HTTPS 解密）
 
 ## 安装（Shadowrocket）
 
@@ -17,11 +16,6 @@ https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.mod
 ```
 
 安装前请删除原来的「哔哩哔哩增强」模块，以及通过 Script Hub 导入的本模块副本，避免重复处理。
-
-## 使用须知
-
-- Shadowrocket 首页的「全局路由」请保持为「配置」。选「代理」或「直连」时，Shadowrocket 不执行任何规则（包括本模块的规则），这时 B站 的视频详情、评论、弹幕请求可能改走 QUIC，空降助手、评论过滤等功能都会失效。
-- 想让 B站 直连，请在配置的规则里把 B站 的策略改为 `DIRECT`，不要改全局路由。
 
 ## 参数
 
@@ -38,7 +32,9 @@ https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.mod
 - `bilibili-intl.module`：模块（Shadowrocket 原生）
 - `bilibili-intl.sgmodule`：旧版 Surge 格式，仅为通过 Script Hub 订阅的旧链接过渡保留，之后会删除
 - `bilibili.layout.js`：处理首页布局与「我的」页；其余接口仍使用原作者的脚本
-- `bilibili.protobuf.request.js`：空降助手脚本，复制自原作者，仅把两个网络请求的超时由 3 秒放宽到 8 秒，减少网络较慢时首次观看失效
+- `bilibili.airborne.js`：空降助手脚本，复制自原作者的 `bilibili.protobuf.request.js`，仅把两个网络请求的超时由 3 秒放宽到 8 秒，减少网络较慢时首次观看失效
+
+模块里的脚本都指定了 `engine=webview`（与原作者的模块相同）。原作者的脚本用到了只有 WebView 才提供的接口（如 `URL`），在 Shadowrocket 默认的 JSC 引擎里会直接失效。
 
 ## 许可
 
