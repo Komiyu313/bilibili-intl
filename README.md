@@ -32,6 +32,7 @@ https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.mod
 - `bilibili-intl.module`：模块（Shadowrocket 原生）
 - `bilibili-intl.sgmodule`：旧版 Surge 格式，仅为通过 Script Hub 订阅的旧链接过渡保留，之后会删除
 - `bilibili.layout.js`：处理首页布局与「我的」页；其余接口仍使用原作者的脚本
+- `bilibili.protobuf.request.js`：空降助手脚本，复制自原作者，仅把两个网络请求的超时由 3 秒放宽到 8 秒，减少网络较慢时首次观看失效
 
 ## 许可
 

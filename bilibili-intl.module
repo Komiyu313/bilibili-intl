@@ -46,7 +46,7 @@ http-response-jq ^https:\/\/api\.bilibili\.com\/pgc\/page\/channel\? '.data.modu
 ^https:\/\/grpc\.biliapi\.net\/bilibili\.app\.(?:view\.v1\.View\/TFInfo|viewunite\.v1\.View\/(?:PlayPause|ViewEndPage))$ data-type=base64 data="AAAAAAA=" header="content-type: application/grpc|grpc-status: 0"
 
 [Script]
-{{{空降助手}}} = type=http-request, pattern=^https:\/\/(?:grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.community\.service\.dm\.v1\.DM\/DmSegMobile$, script-path=https://raw.githubusercontent.com/kokoryh/Sparkle/refs/heads/master/dist/bilibili.protobuf.request.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=10, argument="{"logLevel":"{{{日志等级}}}"}"
+{{{空降助手}}} = type=http-request, pattern=^https:\/\/(?:grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.community\.service\.dm\.v1\.DM\/DmSegMobile$, script-path=https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili.protobuf.request.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=15, argument="{"logLevel":"{{{日志等级}}}"}"
 
 bilibili.protobuf.request = type=http-request, pattern=^https:\/\/(?:grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.(?:app\.viewunite\.v1\.View\/View|main\.community\.reply\.v1\.Reply\/MainList)$, script-path=https://raw.githubusercontent.com/kokoryh/Sparkle/refs/heads/master/dist/bilibili.protobuf.request.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=10, argument="{"purifyComment":{{{过滤置顶评论广告}}},"logLevel":"{{{日志等级}}}"}"
 
