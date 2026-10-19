@@ -23,13 +23,14 @@ https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.mod
 | --- | --- | --- |
 | 创作中心 | `0` / `1`（默认） | 隐藏 / 保留服务器返回的创作中心板块 |
 | 消息入口 | `top`（默认） / `bottom` | 首页右上角 / 底栏 |
-| 屏蔽P2P端口 | `REJECT-NO-DROP`（默认） / `DIRECT` | 屏蔽 / 不屏蔽 4480、4483、9102 端口 |
+| 屏蔽P2P端口 | `REJECT-NO-DROP`（默认） / `DIRECT` / 策略组名 | 4480、4483、9102 端口连接使用的策略：屏蔽 / 直连 / 指定策略。按端口匹配，对所有 App 生效 |
 
 其余参数与原模块相同。
 
 ## 文件
 
-- `bilibili-intl.module`：模块
+- `bilibili-intl.module`：模块（Shadowrocket 原生）
+- `bilibili-intl.sgmodule`：旧版 Surge 格式，仅为通过 Script Hub 订阅的旧链接过渡保留，之后会删除
 - `bilibili.layout.js`：处理首页布局与「我的」页；其余接口仍使用原作者的脚本
 
 ## 许可
