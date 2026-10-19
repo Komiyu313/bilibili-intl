@@ -9,13 +9,13 @@
 
 ## 安装（Shadowrocket）
 
-配置 → 模块 → 右上角 ＋，填入：
+原生 Shadowrocket 模块，无需 Script Hub。配置 → 模块 → 右上角 ＋，填入：
 
 ```
-https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.sgmodule
+https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.module
 ```
 
-安装前请关闭原来的「哔哩哔哩增强」模块，避免重复处理。
+安装前请删除原来的「哔哩哔哩增强」模块，以及通过 Script Hub 导入的本模块副本，避免重复处理。
 
 ## 参数
 
@@ -23,12 +23,13 @@ https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.sgm
 | --- | --- | --- |
 | 创作中心 | `0` / `1`（默认） | 隐藏 / 保留服务器返回的创作中心板块 |
 | 消息入口 | `top`（默认） / `bottom` | 首页右上角 / 底栏 |
+| 屏蔽P2P端口 | `REJECT-NO-DROP`（默认） / `DIRECT` | 屏蔽 / 不屏蔽 4480、4483、9102 端口 |
 
 其余参数与原模块相同。
 
 ## 文件
 
-- `bilibili-intl.sgmodule`：模块
+- `bilibili-intl.module`：模块
 - `bilibili.layout.js`：处理首页布局与「我的」页；其余接口仍使用原作者的脚本
 
 ## 许可
