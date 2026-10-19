@@ -19,6 +19,7 @@ AND,((DOMAIN-SUFFIX,chat.bilibili.com), (OR,((DOMAIN-KEYWORD,stun), (DOMAIN-KEYW
 {{{屏蔽P2P}}},4480,REJECT-NO-DROP,pre-matching
 {{{屏蔽P2P}}},4483,REJECT-NO-DROP,pre-matching
 {{{屏蔽P2P}}},9102,REJECT-NO-DROP,pre-matching
+AND,((PROTOCOL,UDP),(OR,((DOMAIN,grpc.biliapi.net),(DOMAIN,app.bilibili.com),(DOMAIN,api.bilibili.com),(DOMAIN,api.live.bilibili.com),(DOMAIN,www.bilibili.com),(DOMAIN,line3-h5-mobile-api.biligame.com)))),REJECT-NO-DROP
 
 [Map Local]
 ^https:\/\/app\.bilibili\.com\/x\/v2\/splash\/list\? header="content-type: application/json" data-type=text data="{"code":0,"message":"OK","ttl":1,"data":{"max_time":0,"min_interval":31536000,"pull_interval":31536000,"keep_ids":[],"show":[],"list":[{}],"splash_request_id":""}}"

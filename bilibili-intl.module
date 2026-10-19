@@ -18,6 +18,7 @@ AND,((DOMAIN-SUFFIX,chat.bilibili.com),(OR,((DOMAIN-KEYWORD,stun),(DOMAIN-KEYWOR
 DST-PORT,4480,{{{屏蔽P2P端口}}}
 DST-PORT,4483,{{{屏蔽P2P端口}}}
 DST-PORT,9102,{{{屏蔽P2P端口}}}
+AND,((PROTOCOL,UDP),(OR,((DOMAIN,grpc.biliapi.net),(DOMAIN,app.bilibili.com),(DOMAIN,api.bilibili.com),(DOMAIN,api.live.bilibili.com),(DOMAIN,www.bilibili.com),(DOMAIN,line3-h5-mobile-api.biligame.com)))),REJECT-NO-DROP
 
 [URL Rewrite]
 ^(https:\/\/api\.bilibili\.com\/x\/emote\/user\/panel\?(?:.*&)?)mobi_app=iphone_i((?:&.*)?)$ $1mobi_app=iphone$2 header

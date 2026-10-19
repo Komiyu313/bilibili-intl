@@ -6,6 +6,7 @@
 - 「我的」页保留创作中心板块
 - 评论区表情面板显示已购买的表情包
 - 界面文字跟随 App 语言（简体中文 / 繁體中文 / English / 日本語）
+- 屏蔽 B站 接口域名的 QUIC，让视频详情、评论、弹幕请求走 TCP，脚本才能处理（否则 App 可能改走 QUIC，绕过 HTTPS 解密）
 
 ## 安装（Shadowrocket）
 
@@ -16,6 +17,11 @@ https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.mod
 ```
 
 安装前请删除原来的「哔哩哔哩增强」模块，以及通过 Script Hub 导入的本模块副本，避免重复处理。
+
+## 使用须知
+
+- Shadowrocket 首页的「全局路由」请保持为「配置」。选「代理」或「直连」时，Shadowrocket 不执行任何规则（包括本模块的规则），这时 B站 的视频详情、评论、弹幕请求可能改走 QUIC，空降助手、评论过滤等功能都会失效。
+- 想让 B站 直连，请在配置的规则里把 B站 的策略改为 `DIRECT`，不要改全局路由。
 
 ## 参数
 
