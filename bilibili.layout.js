@@ -7,7 +7,8 @@
  *
  * 与原脚本的区别：
  *   - 服务器不返回右上角入口时（国际版、海外布局）也会加上「消息」，可改为放回底栏
- *   - 保留服务器返回的创作中心板块，语言不一致时翻译标题、按钮和已知条目
+ *   - 保留服务器返回的创作中心板块，改成大陆版的宫格样式并补上「数据中心」「有奖活动」，
+ *     语言不一致时翻译标题、按钮和已知条目
  *
  * 参数（argument，JSON）：
  *   showCreatorHub: 0 隐藏创作中心，1 保留（默认 1）
@@ -21,7 +22,7 @@ const I18N = {
         live: '直播', for_you: '推荐', trending: '热门', anime: '动画', film: '影视',
         messages: '消息', home: '首页', following: '动态', me: '我的',
         downloads: '离线缓存', history: '历史记录', my_favorites: '我的收藏', watch_later: '稍后再看',
-        creator_hub: '创作中心', data_center: '数据中心', upload: '发布', upload_management: '稿件管理',
+        creator_hub: '创作中心', data_center: '数据中心', upload: '发布', upload_management: '稿件管理', reward_events: '有奖活动',
         recommended_services: '推荐服务', customization: '个性装扮', mall: '会员购', my_wallet: '我的钱包',
         live_studio: '我的直播', more_services: '更多服务', help_center: '联系客服', settings: '设置',
     },
@@ -29,7 +30,7 @@ const I18N = {
         live: '直播', for_you: '推薦', trending: '熱門', anime: '動畫', film: '影視',
         messages: '訊息', home: '首頁', following: '關注', me: '我的',
         downloads: '離線快取', history: '歷史記錄', my_favorites: '我的收藏', watch_later: '稍後再看',
-        creator_hub: '創作中心', data_center: '資料中心', upload: '發佈', upload_management: '稿件管理',
+        creator_hub: '創作中心', data_center: '資料中心', upload: '發佈', upload_management: '稿件管理', reward_events: '有獎活動',
         recommended_services: '我的服務', customization: '個性裝扮', mall: '會員購', my_wallet: '我的錢包',
         live_studio: '我的直播', more_services: '更多服務', help_center: '聯絡客服', settings: '設定',
     },
@@ -37,7 +38,7 @@ const I18N = {
         live: 'Live', for_you: 'For You', trending: 'Trending', anime: 'Anime', film: 'Film & TV',
         messages: 'Messages', home: 'Home', following: 'Following', me: 'Me',
         downloads: 'Downloads', history: 'History', my_favorites: 'My Favorites', watch_later: 'Watch Later',
-        creator_hub: 'Creator Hub', data_center: 'Data Center', upload: 'Upload', upload_management: 'Upload Management',
+        creator_hub: 'Creator Hub', data_center: 'Data Center', upload: 'Upload', upload_management: 'Upload Management', reward_events: 'Events',
         recommended_services: 'Recommended Services', customization: 'Customization', mall: 'Mall', my_wallet: 'My Wallet',
         live_studio: 'Live Studio', more_services: 'More Services', help_center: 'Help Center', settings: 'Settings',
     },
@@ -45,7 +46,7 @@ const I18N = {
         live: 'ライブ', for_you: 'おすすめ', trending: '急上昇', anime: 'アニメ', film: '映画・ドラマ',
         messages: 'メッセージ', home: 'ホーム', following: 'フォロー', me: 'マイページ',
         downloads: 'オフライン保存', history: '履歴', my_favorites: 'お気に入り', watch_later: '後で見る',
-        creator_hub: 'クリエイターセンター', data_center: 'データセンター', upload: '投稿', upload_management: '投稿管理',
+        creator_hub: 'クリエイターセンター', data_center: 'データセンター', upload: '投稿', upload_management: '投稿管理', reward_events: 'イベント',
         recommended_services: 'マイサービス', customization: 'カスタマイズ', mall: 'モール', my_wallet: 'ウォレット',
         live_studio: '配信スタジオ', more_services: 'その他のサービス', help_center: 'ヘルプセンター', settings: '設定',
     },
@@ -164,20 +165,37 @@ function isCreatorSection(s, t) {
     );
 }
 
-// Keep the server's creator section; translate it only when it is not already in the app language.
-function translateCreatorSection(section, t) {
-    if ((section.title || '') === t.creator_hub) return section;
+// Entries the mainland app shows after 创作中心 and 稿件管理. Both are web pages, so the intl app can open them too.
+function creatorExtras(t) {
+    return [
+        { id: 534, title: t.data_center, uri: 'https://member.bilibili.com/york/data-center?navhide=1&from=profile', icon: 'https://i0.hdslb.com/bfs/feed-admin/367204ba56004b1a78211ba27eefbf5b4cc53a35.png', need_login: 1, global_red_dot: 1, display: 1 },
+        { id: 174, title: t.reward_events, uri: 'https://www.bilibili.com/blackboard/x/activity-tougao-h5/all', icon: 'https://i0.hdslb.com/bfs/archive/7f4fa86d99bf3814bf10f8ee5d6c8c9db6e931c8.png', need_login: 1, global_red_dot: 1, display: 1 },
+    ];
+}
+
+// Keep the server's creator section but lay it out like the mainland app: a grid (style 1) of up to four entries.
+// Titles are translated only when the section is not already in the app language.
+function buildCreatorSection(section, t) {
     const s = JSON.parse(JSON.stringify(section));
     try {
-        s.title = t.creator_hub;
-        if (s.up_title) s.up_title = t.creator_hub;
-        if (isObject(s.button) && s.button.text) s.button.text = t.upload;
-        if (Array.isArray(s.items)) {
-            for (const item of s.items) {
-                const uri = (isObject(item) && item.uri) || '';
+        const items = Array.isArray(s.items) ? s.items.filter(isObject) : [];
+        const path = uri => (typeof uri === 'string' ? uri.split('?')[0] : '');
+        for (const extra of creatorExtras(t)) {
+            if (items.length >= 4) break;
+            if (!items.some(i => path(i.uri) === path(extra.uri))) items.push(extra);
+        }
+        s.items = items;
+        s.style = 1;
+        if ((s.title || '') !== t.creator_hub) {
+            s.title = t.creator_hub;
+            if (s.up_title) s.up_title = t.creator_hub;
+            if (isObject(s.button) && s.button.text) s.button.text = t.upload;
+            for (const item of items) {
+                const uri = item.uri || '';
                 if (uri.startsWith('bilibili://uper/homevc')) item.title = t.creator_hub;
                 else if (uri.includes('archive_list') || uri.includes('manuscript-list')) item.title = t.upload_management;
                 else if (uri.includes('data-center')) item.title = t.data_center;
+                else if (uri.includes('activity-tougao')) item.title = t.reward_events;
             }
         }
         return s;
@@ -228,7 +246,7 @@ function handleMine(data, t, arg) {
 
     const original = Array.isArray(data.sections_v2) ? data.sections_v2 : [];
     const found = original.find(s => isCreatorSection(s, t));
-    const creator = found && String(arg.showCreatorHub) !== '0' ? [translateCreatorSection(found, t)] : [];
+    const creator = found && String(arg.showCreatorHub) !== '0' ? [buildCreatorSection(found, t)] : [];
 
     data.sections_v2 = [
         {
