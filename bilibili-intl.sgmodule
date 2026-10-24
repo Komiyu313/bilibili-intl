@@ -1,5 +1,5 @@
 #!name=bilibili增强
-#!desc=基于 kokoryh/Sparkle。适配国际版：评论区/私信可使用已购买的表情包、首页右上角添加「消息」入口、「我的」页面默认保留创作中心板块
+#!desc=基于 kokoryh/Sparkle。适配国际版：评论区/私信可使用已购买的表情包、首页右上角添加「消息」入口、「我的」页面默认保留创作中心版块
 #!category=Enhancement
 #!arguments=动态最常访问:auto,创作中心:1,消息入口:top,过滤置顶评论广告:1,空降助手:bilibili.airborne,空降助手策略:DIRECT,屏蔽P2P:DEST-PORT,日志等级:4
 #!arguments-desc=动态最常访问\n- auto: 仅当列表中存在直播状态时显示\n- show: 始终显示\n- hide: 始终隐藏\n\n创作中心\n- 0: 隐藏\n- 1: 显示，使用大陆版的宫格样式\n\n消息入口\n- top: 首页右上角\n- bottom: 底栏\n\n过滤置顶评论广告\n- 0: 关闭\n- 1: 开启\n\n空降助手: 默认开启，配置为"#"时关闭\n\n空降助手策略: 默认直连，建议配置为代理策略\n\n屏蔽P2P: 默认开启，配置为"#"时关闭\n\n日志等级\n- 1: DEBUG\n- 2: INFO\n- 3: WARN\n- 4: ERROR\n- 5: OFF
