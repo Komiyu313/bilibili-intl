@@ -58,8 +58,8 @@ function main() {
         for (const k of Object.keys(data)) if (!SKIP.test(k) && Array.isArray(data[k])) logItems(k, data[k]);
     }
 
-    // Same as upstream handleSplash, so this version blocks splash ads exactly like the main version.
-    if (/\/x\/v2\/splash\/(?:show|event\/list2)$/.test(path) && host === 'app.bilibili.com' && obj.code === 0 && data && typeof data === 'object' && !Array.isArray(data)) {
+    // Same as upstream handleSplash (its router also covers splash/list).
+    if (/\/x\/v2\/splash\/(?:list|show|event\/list2)$/.test(path) && host === 'app.bilibili.com' && obj.code === 0 && data && typeof data === 'object' && !Array.isArray(data)) {
         patch(data, { account: undefined, event_list: undefined, preload: undefined, show: undefined, max_time: 0, min_interval: 31536000, pull_interval: 31536000 });
         if (Array.isArray(data.list)) {
             for (const it of data.list) {

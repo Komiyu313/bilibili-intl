@@ -1,5 +1,5 @@
 #!name=bilibili增强（测试版）
-#!desc=本次测试：诊断开屏广告来源。开屏效果与正式版相同，额外在日志中记录开屏接口和 cm.bilibili.com 的响应摘要（不含账号信息）
+#!desc=本次测试：开屏素材列表（splash/list）不再直接替换为空，改为取回真实列表后把每条广告的投放时间推到 2050 年，以覆盖 App 本地缓存的广告；日志继续记录开屏接口摘要
 #!category=Enhancement
 #!arguments=动态最常访问:auto,创作中心:1,消息入口:top,过滤置顶评论广告:1,空降助手:bilibili.airborne,空降助手策略:DIRECT,屏蔽P2P:DEST-PORT,日志等级:4
 #!arguments-desc=动态最常访问\n- auto: 仅当列表中存在直播状态时显示\n- show: 始终显示\n- hide: 始终隐藏\n\n创作中心\n- 0: 隐藏\n- 1: 显示，使用大陆版的宫格样式\n\n消息入口\n- top: 首页右上角\n- bottom: 底栏\n\n过滤置顶评论广告\n- 0: 关闭\n- 1: 开启\n\n空降助手: 默认开启，配置为"#"时关闭\n\n空降助手策略: 默认直连，建议配置为代理策略\n\n屏蔽P2P: 默认开启，配置为"#"时关闭\n\n日志等级\n- 1: DEBUG\n- 2: INFO\n- 3: WARN\n- 4: ERROR\n- 5: OFF
@@ -21,7 +21,6 @@ AND,((DOMAIN-SUFFIX,chat.bilibili.com), (OR,((DOMAIN-KEYWORD,stun), (DOMAIN-KEYW
 {{{屏蔽P2P}}},9102,REJECT-NO-DROP,pre-matching
 
 [Map Local]
-^https:\/\/app\.bilibili\.com\/x\/v2\/splash\/list\? header="content-type: application/json" data-type=text data="{"code":0,"message":"OK","ttl":1,"data":{"max_time":0,"min_interval":31536000,"pull_interval":31536000,"keep_ids":[],"show":[],"list":[{}],"splash_request_id":""}}"
 ^https:\/\/ap[ip]\.bilibili\.com\/x\/(?:resource\/(?:top\/activity|patch\/tab(?:\/v2)?)|v2\/search\/square|vip\/ads\/materials)\? header="content-type: application/json" data-type=text data="{"code":-404,"message":"-404","ttl":1,"data":null}"
 ^https:\/\/api\.bilibili\.com\/pgc\/activity\/deliver\/material\/receive\? header="content-type: application/json" data-type=text data="{"code":0,"data":{"closeType":"close_win","container":[],"showTime":""},"message":"success"}"
 ^https:\/\/api\.live\.bilibili\.com\/xlive\/e-commerce-interface\/v1\/ecommerce-user\/get_shopping_info\? header="content-type: application/json" data-type=text data="{}"
@@ -47,7 +46,7 @@ bilibili.skin = type=http-response,pattern=^https:\/\/app\.bilibili\.com\/x\/res
 bilibili.live = type=http-response,pattern=^https:\/\/api\.live\.bilibili\.com\/xlive\/(?:app-interface\/v2\/index\/feed|app-room\/v1\/index\/getInfoBy(?:Room|User))\?,requires-body=1,max-size=-1,engine=webview,script-path=https://raw.githubusercontent.com/kokoryh/Sparkle/refs/heads/master/dist/bilibili.json.js
 bilibili.json = type=http-response,pattern=^https:\/\/app\.bilibili\.com\/x\/v2\/(?:feed\/index\/story|account\/(?:mine\/ipad|myinfo))\?,argument="{"showCreatorHub":{{{创作中心}}}}",requires-body=1,max-size=-1,engine=webview,script-path=https://raw.githubusercontent.com/kokoryh/Sparkle/refs/heads/master/dist/bilibili.json.js
 bilibili.layout = type=http-response,pattern=^https:\/\/app\.bilibili\.com\/x\/(?:resource\/show\/tab\/v2|v2\/account\/mine)\?,argument="{"showCreatorHub":{{{创作中心}}},"messageEntry":"{{{消息入口}}}"}",requires-body=1,max-size=-1,engine=webview,script-path=https://raw.githubusercontent.com/Komiyu313/bilibili-intl/dev/bilibili.layout.js
-bilibili.diag = type=http-response,pattern=^https:\/\/(?:app\.bilibili\.com\/x\/v2\/splash\/(?:show|event\/list2|brand\/list)\?|cm\.bilibili\.com\/),requires-body=1,max-size=-1,timeout=10,script-path=https://raw.githubusercontent.com/Komiyu313/bilibili-intl/dev/diag.splash.js
+bilibili.diag = type=http-response,pattern=^https:\/\/(?:app\.bilibili\.com\/x\/v2\/splash\/(?:list|show|event\/list2|brand\/list)\?|cm\.bilibili\.com\/),requires-body=1,max-size=-1,timeout=10,script-path=https://raw.githubusercontent.com/Komiyu313/bilibili-intl/dev/diag.splash.js
 bilibili.webpage = type=http-response,pattern=^https:\/\/www\.bilibili\.com\/blackboard\/era\/.+\.html\?,requires-body=1,max-size=-1,engine=webview,script-path=https://raw.githubusercontent.com/kokoryh/Sparkle/refs/heads/master/dist/webpage.bilibili.js
 bilibili.protobuf.response = type=http-response,pattern=^https:\/\/(?:grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.(?:app\.(?:show\.v1\.Popular\/Index|dynamic\.v2\.Dynamic\/DynAll|view(?:unite)?\.v1\.View\/(?:View|ViewProgress|RelatesFeed|AIRelateAsync)|playurl\.v1\.PlayURL\/PlayView|playerunite\.v1\.Player\/PlayViewUnite)|polymer\.app\.search\.v1\.Search\/SearchAll|community\.service\.dm\.v1\.DM\/DmView|main\.community\.reply\.v1\.Reply\/MainList|pgc\.gateway\.player\.v2\.PlayURL\/PlayView)$,argument="{"displayUpList":"{{{动态最常访问}}}","purifyComment":{{{过滤置顶评论广告}}},"sponsorBlock":"{{{空降助手}}}","logLevel":"{{{日志等级}}}"}",requires-body=1,binary-body-mode=1,max-size=-1,engine=webview,script-path=https://raw.githubusercontent.com/kokoryh/Sparkle/refs/heads/master/dist/bilibili.protobuf.response.js
 
