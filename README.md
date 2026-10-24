@@ -14,7 +14,7 @@
 https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.sgmodule
 ```
 
-安装前请关闭原来的「哔哩哔哩增强」模块，避免重复处理。
+安装前请关闭原作者的「哔哩哔哩增强」模块，避免重复处理。
 
 ## 参数
 
