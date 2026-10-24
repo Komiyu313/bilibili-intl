@@ -9,21 +9,15 @@
 
 ## 安装（Shadowrocket）
 
-配置 → 模块 → 右上角 ＋，二选一：
+配置 → 模块 → 右上角 ＋，填入：
 
-- 原生模块，无需 Script Hub：
+```
+https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.sgmodule
+```
 
-  ```
-  https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.module
-  ```
+Shadowrocket 可以直接读取这个 Surge 格式的模块，不需要 Script Hub。建议直接导入原文件，不要先转换：按 Script Hub 转换结果改写的版本（规则、本地映射和脚本参数的写法都被改动过）在测试中空降助手和置顶评论过滤都失效了。
 
-- Surge 格式，经 Script Hub 转换后使用：
-
-  ```
-  https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.sgmodule
-  ```
-
-两者只启用一个，并关闭原来的「哔哩哔哩增强」模块，避免重复处理。
+安装前请关闭原来的「哔哩哔哩增强」模块，避免重复处理。
 
 ## 参数
 
@@ -32,12 +26,11 @@
 | 创作中心 | `0` / `1`（默认） | 隐藏 / 保留服务器返回的创作中心板块 |
 | 消息入口 | `top`（默认） / `bottom` | 首页右上角 / 底栏 |
 
-其余参数与原模块相同。原生模块没有「屏蔽P2P」参数：Script Hub 转换时会丢弃用到它的规则，所以它在 Shadowrocket 上本来就不起作用。
+其余参数与原模块相同。
 
 ## 文件
 
-- `bilibili-intl.sgmodule`：模块（Surge 格式）
-- `bilibili-intl.module`：原生 Shadowrocket 模块。内容就是 Script Hub 对 `bilibili-intl.sgmodule` 的转换结果，只改了两处：脚本都加上 `engine=webview`（不写时原生模块会用 JSC 引擎，而原作者的脚本需要 WebView），并去掉「屏蔽P2P」参数
+- `bilibili-intl.sgmodule`：模块（Surge 格式，Shadowrocket 可直接使用）
 - `bilibili.layout.js`：处理首页布局与「我的」页；其余接口仍使用原作者的脚本
 
 ## 许可
