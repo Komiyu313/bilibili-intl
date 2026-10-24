@@ -1,4 +1,4 @@
-# 哔哩哔哩增强（国际版适配）
+# bilibili增强
 
 基于 [kokoryh/Sparkle](https://github.com/kokoryh/Sparkle) 的「哔哩哔哩增强」模块，适配哔哩哔哩国际版（iPhone）：
 
