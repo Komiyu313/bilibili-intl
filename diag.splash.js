@@ -66,6 +66,8 @@ function main() {
                 if (it && typeof it === 'object') patch(it, { duration: 0, begin_time: 2524579200, end_time: 2524665599, enable_pre_download: false });
             }
         }
+        // Test: tell the app to keep nothing, hoping it drops the splash ads it already downloaded.
+        if (path.endsWith('/splash/list')) patch(data, { keep_ids: [], list: [] });
         return $done({ body: JSON.stringify(obj) });
     }
     $done({});
