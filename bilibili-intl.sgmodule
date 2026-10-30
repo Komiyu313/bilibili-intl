@@ -1,5 +1,5 @@
 #!name=bilibili增强（测试版）
-#!desc=本次测试：把发往 grpc.biliapi.net 的请求改发到 app.bilibili.com，看视频详情、推荐视频和评论是否能秒加载（沿用上一版：不在请求阶段重复请求、拦截开屏广告视频）
+#!desc=本次测试：直接拒绝 grpc.biliapi.net 的连接，让 App 立即改用 app.bilibili.com，看视频详情、推荐视频和评论是否能秒加载（沿用上一版：不在请求阶段重复请求、拦截开屏广告视频）
 #!category=Enhancement
 #!arguments=动态最常访问:auto,创作中心:1,消息入口:top,过滤置顶评论广告:1,空降助手:bilibili.airborne,空降助手策略:DIRECT,屏蔽P2P:DEST-PORT,日志等级:1
 #!arguments-desc=动态最常访问\n- auto: 仅当列表中存在直播状态时显示\n- show: 始终显示\n- hide: 始终隐藏\n\n创作中心\n- 0: 隐藏\n- 1: 显示，使用大陆版的宫格样式\n\n消息入口\n- top: 首页右上角\n- bottom: 底栏\n\n过滤置顶评论广告\n- 0: 关闭\n- 1: 开启\n\n空降助手: 默认开启，配置为"#"时关闭\n\n空降助手策略: 默认直连，建议配置为代理策略\n\n屏蔽P2P: 默认开启，配置为"#"时关闭\n\n日志等级\n- 1: DEBUG\n- 2: INFO\n- 3: WARN\n- 4: ERROR\n- 5: OFF
@@ -9,6 +9,7 @@
 URL-REGEX,^http:\/\/(?:[0-9.]+|\[[0-9a-fA-F:]+\])\/191607\/,REJECT
 DOMAIN,httpdns.bilivideo.com,REJECT,pre-matching
 DOMAIN,dns.google,REJECT,pre-matching
+DOMAIN,grpc.biliapi.net,REJECT,pre-matching
 URL-REGEX,^https?:\/\/[^\/]+\.(?:bilivideo\.com|akamaized\.net)\/ssaxcode\/,REJECT
 DOMAIN,gaoneng.bilibili.com,REJECT,pre-matching,extended-matching
 DOMAIN,adsrv.kurogames.com,REJECT,pre-matching,extended-matching
@@ -35,7 +36,6 @@ AND,((DOMAIN-SUFFIX,chat.bilibili.com), (OR,((DOMAIN-KEYWORD,stun), (DOMAIN-KEYW
 ^https:\/\/(?:grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\.(?:view\.v1\.View\/TFInfo|viewunite\.v1\.View\/(?:PlayPause|ViewEndPage))$ header="content-type: application/grpc|grpc-status: 0" data-type=base64 data="AAAAAAA="
 
 [URL Rewrite]
-^https:\/\/grpc\.biliapi\.net\/(bilibili\..*)$ https://app.bilibili.com/$1 header
 ^(https:\/\/api\.bilibili\.com\/x\/emote\/user\/panel\?(?:.*&)?)mobi_app=iphone_i((?:&.*)?)$ $1mobi_app=iphone$2 header
 
 [Body Rewrite]
