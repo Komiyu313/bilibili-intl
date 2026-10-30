@@ -1,5 +1,5 @@
 #!name=bilibili增强（测试版）
-#!desc=本次测试：直接拒绝 grpc.biliapi.net 的连接，让 App 立即改用 app.bilibili.com，看视频详情、推荐视频和评论是否能秒加载（沿用上一版：不在请求阶段重复请求、拦截开屏广告视频）
+#!desc=本次测试：重新解密 B 站图片服务器（i0/i1/i2.hdslb.com），拦截开屏广告图片（/bfs/sycp 路径）（沿用上一版：拒绝 grpc.biliapi.net、不在请求阶段重复请求、拦截开屏广告视频）
 #!category=Enhancement
 #!arguments=动态最常访问:auto,创作中心:1,消息入口:top,过滤置顶评论广告:1,空降助手:bilibili.airborne,空降助手策略:DIRECT,屏蔽P2P:DEST-PORT,日志等级:1
 #!arguments-desc=动态最常访问\n- auto: 仅当列表中存在直播状态时显示\n- show: 始终显示\n- hide: 始终隐藏\n\n创作中心\n- 0: 隐藏\n- 1: 显示，使用大陆版的宫格样式\n\n消息入口\n- top: 首页右上角\n- bottom: 底栏\n\n过滤置顶评论广告\n- 0: 关闭\n- 1: 开启\n\n空降助手: 默认开启，配置为"#"时关闭\n\n空降助手策略: 默认直连，建议配置为代理策略\n\n屏蔽P2P: 默认开启，配置为"#"时关闭\n\n日志等级\n- 1: DEBUG\n- 2: INFO\n- 3: WARN\n- 4: ERROR\n- 5: OFF
@@ -11,6 +11,7 @@ DOMAIN,httpdns.bilivideo.com,REJECT,pre-matching
 DOMAIN,dns.google,REJECT,pre-matching
 DOMAIN,grpc.biliapi.net,REJECT,pre-matching
 URL-REGEX,^https?:\/\/[^\/]+\.(?:bilivideo\.com|akamaized\.net)\/ssaxcode\/,REJECT
+URL-REGEX,^https?:\/\/i[0-9]\.hdslb\.com\/bfs\/sycp,REJECT
 DOMAIN,gaoneng.bilibili.com,REJECT,pre-matching,extended-matching
 DOMAIN,adsrv.kurogames.com,REJECT,pre-matching,extended-matching
 DOMAIN,adtrack.qianwen.com,REJECT,pre-matching,extended-matching
@@ -55,4 +56,4 @@ bilibili.webpage = type=http-response,pattern=^https:\/\/www\.bilibili\.com\/bla
 bilibili.protobuf.response = type=http-response,pattern=^https:\/\/(?:grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.(?:app\.(?:show\.v1\.Popular\/Index|dynamic\.v2\.Dynamic\/DynAll|view(?:unite)?\.v1\.View\/(?:View|ViewProgress|RelatesFeed|AIRelateAsync)|playurl\.v1\.PlayURL\/PlayView|playerunite\.v1\.Player\/PlayViewUnite)|polymer\.app\.search\.v1\.Search\/SearchAll|community\.service\.dm\.v1\.DM\/DmView|main\.community\.reply\.v1\.Reply\/MainList|pgc\.gateway\.player\.v2\.PlayURL\/PlayView)$,argument="{"displayUpList":"{{{动态最常访问}}}","purifyComment":{{{过滤置顶评论广告}}},"sponsorBlock":"{{{空降助手}}}","logLevel":"{{{日志等级}}}"}",requires-body=1,binary-body-mode=1,max-size=-1,engine=webview,script-path=https://raw.githubusercontent.com/kokoryh/Sparkle/refs/heads/master/dist/bilibili.protobuf.response.js
 
 [MITM]
-hostname = %APPEND% grpc.biliapi.net, app.bilibili.com, upos-sz-static.bilivideo.com, api.bilibili.com, api.live.bilibili.com, www.bilibili.com, line3-h5-mobile-api.biligame.com
+hostname = %APPEND% grpc.biliapi.net, app.bilibili.com, upos-sz-static.bilivideo.com, i0.hdslb.com, i1.hdslb.com, i2.hdslb.com, api.bilibili.com, api.live.bilibili.com, www.bilibili.com, line3-h5-mobile-api.biligame.com
