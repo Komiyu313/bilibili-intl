@@ -2,7 +2,7 @@
 #!desc=本次测试：整理模块内容（规则按用途分组、删掉 4 条第三方广告统计拦截、去掉已被拒绝的 grpc.biliapi.net 的匹配和解密），参数说明精简并附上仓库地址，功能不变
 #!category=Enhancement
 #!arguments=动态最常访问:auto,创作中心:1,消息入口:top,过滤置顶评论广告:1,空降助手:bilibili.airborne,空降助手策略:DIRECT,屏蔽P2P:DEST-PORT,开屏广告拦截:i,日志等级:1
-#!arguments-desc=动态最常访问：auto有直播时显示，show显示，hide隐藏\n创作中心：1显示，0隐藏\n消息入口：top首页右上角，bottom底栏\n过滤置顶评论广告：1开启，0关闭\n空降助手：配置为#时关闭\n空降助手策略：获取空降数据所用的策略\n屏蔽P2P：配置为#时关闭\n开屏广告拦截：配置为#时关闭\n日志等级：1 DEBUG，2 INFO，3 WARN，4 ERROR，5 OFF\n\n详细说明见README：https://github.com/Komiyu313/bilibili-intl
+#!arguments-desc=动态最常访问：auto有直播时显示，show显示，hide隐藏\n创作中心：1显示，0隐藏\n消息入口：top首页右上角，bottom底栏\n过滤置顶评论广告：1开启，0关闭\n空降助手：配置为#时关闭\n空降助手策略：获取空降数据所用的策略\n屏蔽P2P：配置为#时关闭\n开屏广告拦截：配置为#时关闭\n日志等级：1 DEBUG，2 INFO，3 WARN，4 ERROR，5 OFF\n\n详细说明见 README：https://github.com/Komiyu313/bilibili-intl
 
 [Rule]
 DOMAIN,bsbsb.top,{{{空降助手策略}}}
