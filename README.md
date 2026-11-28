@@ -33,6 +33,8 @@ https://raw.githubusercontent.com/Komiyu313/bilibili-intl/main/bilibili-intl.sgm
 | 隐藏在线人数 | 默认开启，配置为 `#` 时关闭 |
 | 空降助手 | 默认开启，配置为 `#` 时关闭<br>App 9.17 及以上版本改为在进度条上标出可跳过的片段，需手动点击章节跳转 |
 | 空降助手策略 | 默认直连（`DIRECT`），建议配置为代理策略 |
+| 优化CDN | `0`（默认）：关闭<br>`1`：开启，视频优先使用官方CDN，P2P节点替换为「自定义CDN」 |
+| 自定义CDN | 默认腾讯云（`upos-sz-mirrorcos.bilivideo.com`），可选：<br>`upos-sz-mirrorali.bilivideo.com`（阿里云）<br>`upos-sz-mirrorhw.bilivideo.com`（华为云）<br>`upos-sz-mirrorcosov.bilivideo.com`（腾讯云海外）<br>`upos-sz-mirroraliov.bilivideo.com`（阿里云海外）<br>`upos-sz-mirrorhwov.bilivideo.com`（华为云海外）<br>B站走海外节点时建议选海外CDN |
 | 屏蔽P2P | 默认开启，配置为 `#` 时关闭 |
 | 日志等级 | `1`：DEBUG<br>`2`：INFO<br>`3`：WARN<br>`4`（默认）：ERROR<br>`5`：OFF |
 
